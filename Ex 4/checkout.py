@@ -1,5 +1,3 @@
-# checkout.py
-
 def checkout_cart(cart_items, user_balance, available_stock, coupon_code=None):
     total = 0
 

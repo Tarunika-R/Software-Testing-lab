@@ -1,5 +1,3 @@
-# test_checkout.py
-
 import pytest
 from checkout import checkout_cart
 
