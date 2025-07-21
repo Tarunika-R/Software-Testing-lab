@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-download_dir = r"D:/TARU/V th year/Software Testing lab"
+download_dir = "D:/TARU/V th year/Software Testing lab"
 
 options = Options()
 options.add_experimental_option("prefs", {
