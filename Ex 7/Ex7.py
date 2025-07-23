@@ -6,39 +6,45 @@ import os
 
 # Load local HTML file
 file_path = os.path.abspath("college_form.html")
-driver = webdriver.Chrome()  # Ensure chromedriver is in PATH
+driver = webdriver.Chrome()
 driver.get("file://" + file_path)
 
-# Wait for page to load
 time.sleep(1)
 
 # Select Country
 country_select = Select(driver.find_element(By.ID, "country"))
 country_select.select_by_visible_text("India")
 time.sleep(0.8)
-selected_country = country_select.first_selected_option.text
-assert selected_country == "India"
-print("Country selected correctly:", selected_country)
+assert country_select.first_selected_option.text == "India"
+print("Country selected correctly.")
 
 # Select Category
 category_select = Select(driver.find_element(By.ID, "category"))
 category_select.select_by_visible_text("OBC")
 time.sleep(0.8)
-selected_category = category_select.first_selected_option.text
-assert selected_category == "OBC"
-print("Category selected correctly:", selected_category)
+assert category_select.first_selected_option.text == "OBC"
+print("Category selected correctly.")
 
-# Set Date of Birth
+# Set DOB
 dob_input = driver.find_element(By.ID, "dob")
-dob_input.send_keys("2000-01-01")
+dob_input.send_keys("01-01-2000")
 time.sleep(0.8)
 print("DOB set.")
 
-# Enter Email
+# Enter Email (Intentionally wrong)
 email_input = driver.find_element(By.ID, "email")
-email_input.send_keys("testuser@example.com")
+invalid_email = "testuserexample.com"  # no '@'
+email_input.send_keys(invalid_email)
 time.sleep(0.8)
-print("Email entered.")
+
+# Email validation assertion (purposeful fail)
+try:
+    assert "@" in invalid_email
+    print("Email entered correctly.")
+except AssertionError:
+    print("Email NOT correct ❌ — Skipping form submission.")
+    driver.quit()
+    exit()
 
 # Select Qualification
 qualification_select = Select(driver.find_element(By.ID, "qualification"))
@@ -54,12 +60,11 @@ time.sleep(0.8)
 assert course_select.first_selected_option.text == "MBA"
 print("Course selected correctly.")
 
-# Submit Form
+# Submit Form (won't reach here if email failed)
 submit_button = driver.find_element(By.XPATH, "//input[@type='submit']")
 time.sleep(1)
 submit_button.click()
 print("Form submitted.")
 
-# Wait before closing
 time.sleep(2)
 driver.quit()
